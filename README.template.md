@@ -57,6 +57,8 @@ history in [`docs/postmortems/`](docs/postmortems/), procedures in
 
 - <Brian Zhang > — <@Brian-Zhg>
 - <Name> — <@github>
+- <Arunavo Chowdhury> — <iamarunavo>
+- <Zhiling Chen> — <zhilingchen-elden>
 
 ## Contributing
 
