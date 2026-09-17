@@ -56,7 +56,7 @@ history in [`docs/postmortems/`](docs/postmortems/), procedures in
 <!-- Who builds this. Link GitHubs. Your team charter has the roles. -->
 
 - <Arunavo Chowdhury> — <iamarunavo>
-- <Name> — <@github>
+- <Zhiling Chen> — <zhilingchen-elden>
 
 ## Contributing
 
