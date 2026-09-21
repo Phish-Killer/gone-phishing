@@ -12,3 +12,29 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  id             String   @id @default(cuid())
+  userName       String
+  blockList      URL[]    @unique
+  URLs           URL[]    @unique
+  createdAt      DateTime @default(now())
+}
+
+model URL {
+  urlId         String      @id @default(cuid())
+  normalizedURL String
+  safetyScoreId String
+  safetyScore   SafetyScore @relation(fields: [safetyScoreId], references: [id], onDelete: Cascade)
+  createdAt     DateTime    @default(now())
+}
+
+// can we make a map for levelOfRisk
+// keys: 1 - 10
+// values: risk level in english
+
+model SafetyScore {
+  id           String      @id @default(cuid())
+  label        String
+  levelOfRisk  LevelOfRisk
+}
