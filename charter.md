@@ -7,94 +7,86 @@ repo by the Week-4 session · revisit at midterm. Worked example: [charter-examp
 
 ## 1 · Team & Project
 
-**Team name:** ____________
+**Team name:** Phisher Men 
 
-**Project (adopted pitch):** ____________
+**Project (adopted pitch):** Gone Phishing
 
-**Section:** Fri 3:00 / Fri 6:30 / Tue 6:30
+**Section:** Fri 3:00
 
 **Members:**
 
-| Name | GitHub | Email |
-|------|--------|-------|
-|      |        |       |
-|      |        |       |
-|      |        |       |
-|      |        |       |
+| Name              | GitHub            | Email                     |
+|-------------------|-------------------|---------------------------|
+| Arunavo Chowdhury | iamarunavo        | iamarunavo@gmail.com      |
+| Brian Zhang       | Brian-zhg         | brianz12705@gmail.com     |
+| Hector Garcia     | hgarciasoftware   | hgarciasoftware@gmail.com |
+| Zhiling Chen      | zhilingchen-elden | zhilingchen346@gmail.com  |
 
 ### Roles & responsibilities
 
-**Rotating roles (who has it this week is posted in the channel):**
-____________ *(e.g., stand-up lead runs the meeting + posts notes; review
-captain is first responder on every PR; demo owner keeps `main` deployable)*
+Roles rotate weekly so nobody becomes "the one who always…". The stand-up lead runs Friday's 15 minutes and posts the notes. The review captain is first responder on every PR opened that week (others can still review — the captain just guarantees nobody waits). The demo owner keeps main deployable and runs the team's status share when it's our turn. Rotation is in the team channel's pinned message; whoever has it, has it — no swapping without a message.
 
-**Standing ownership:** ____________ *(e.g., each member is first stop for
-their jigsaw aspect — first stop, not sole owner)*
+Standing ownership (from the jigsaw): each member is the first stop for questions in their aspect above. First stop, not sole owner — anyone can change anything, but you ask the expert before you rewrite their layer.
 
-**Everyone, every week:** ____________ *(e.g., one merged PR, one review
-given, stand-up attended or an async update posted before it starts)*
+Everyone, every week: one homework PR merged, one review given, stand-up attended or an async update posted before it starts.
 
 ## 2 · The Product
 
-*Pull this from your adopted pitch, then sharpen it as a team — this is
-refinement, not re-ideation.*
 
-**The problem:** ____________ *(one or two sentences)*
+A phishing analysis detector where a user submits a url for an email and the detector returns a score for the threat level of the particular email
 
-**Who it's for:** ____________
+**The problem:** 191,561 people reported falling for phishing scams in 2025
+
+**Who it's for:** It's for people who want a second opinion on suspicious emails/ links
 
 **Three core features (the MVP):**
 
-1. ____________
-2. ____________
-3. ____________
+1. URL scanner
+2. Threat breakdown 
+3. Scoring
 
-**What ships by Week 13 (demo day):** ____________ *(be concrete — what
+**What ships by Week 13 (demo day):** User opens the URL and they have the option to submit an email or any kind of links and the site should assess how trust worthy the link/ email is as well as being able to view all prior links the user has submitted. *(be concrete — what
 will a stranger see at your demo URL?)*
 
-**Out of scope / v2 ideas (Week-9 pitch fodder):** ____________
+**Out of scope / v2 ideas (Week-9 pitch fodder):** Making a chrome extension for emails and websites.
 
 ## 3 · Working Agreement
 
-**Where we talk:** ____________ *(e.g., team Slack channel)*
+**Where we talk:** Discord/ Slack 
 
-**Response window:** ____________ *(e.g., within 24 hours on weekdays)*
+**Response window:** 10 hours 
 
-**When we meet (outside class):** ____________
+**When we meet (outside class):** Flexible
 
-**Availability notes:** ____________ *(jobs, caregiving, time zones — say
-it now, not in Week 8)*
+**Availability notes:** Schedules were sent on discord
 
-**How we decide when we disagree:** ____________ *(e.g., try to agree; if
-stuck, build the smaller version first)*
+**How we decide when we disagree:** Vote, if equal, rock paper scissors 
 
-**Definition of done:** ____________ *(e.g., merged with green CI,
-reviewed, works at the preview URL)*
+**Definition of done:** Merged into main through the gate, CI green, reviewed by someone who pulled and ran it, and it works at the preview URL — not "works on my machine."
 
 ### Rituals
 
-| Ritual | When | Shape |
-|--------|------|-------|
-| Stand-up | ____________ *(day, time, length — hard stop)* | *(merged / in review / blocked; every blocker leaves with an owner)* |
-| Team review (in class) | every session, ~15 min | *(one PR on screen; the four moves; comments filed for real)* |
-| Async check-in | ____________ | *(one line each: in flight, anything slipping)* |
-| Retro | midterm + before demo day | *(keep / stop / start — the charter gets edited on the spot)* |
-| Planning | ____________ | *(next week's PRs claimed by name, one issue each)* |
+| Ritual                 | When                                   | Shape                                                                                                                                           |
+|------------------------|----------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------|
+| Stand-up               | Friday 5:30 pm, 15 min                 | Each person: merged / in review / blocked. Blockers become a named owner before we hang up.                                                     |
+| Team review (in class) | Every session, ~15 min of project time | One member's PR on the screen; the four moves (pull it, run it, read it, ask one real question). Comments filed as real review comments.        |
+| Async check-in         | Flexible                               | One line each: what's in flight, anything that'll slip. Replaces a meeting, not a conversation.                                                 |
+| Retro                  | Midterm (wk 7) + before demo day       | 20 minutes: keep / stop / start. The charter gets edited on the spot — that's the output.                                                       |
+| Planning               | Sunday night, async, 10 min            | Next week's PRs claimed in the channel by name, one issue each. If you can't name your PR on Sunday, that's the first thing to say at stand-up. |
 
-**How we track work:** ____________ *(e.g., GitHub issues — one per PR,
-assigned to one person, closed by the merge)*
+**How we track work:** GitHub issues — one per PR, assigned to one person, closed by the merge
 
 ## 4 · Code & Review Norms
 
 *Complete this section together in Week 3, at code kickoff.*
 
-**Branch & PR flow:** ____________
+**Branch & PR flow:** main is protected. Branch from main as yourname/short-thing, open a PR early (draft is fine), request the review captain plus one. Squash-merge; the PR title is the commit message, so write it like one.
 
-**What blocks approval:** ____________
+**What blocks approval:** the reviewer couldn't run it; a query that isn't scoped by the current user; a migration that edits an earlier migration instead of adding a new one; AI-generated code the author can't explain when asked. Style never blocks — leave a nit: and approve.
 
-**Review response time:** ____________
+**Review response time:** first response within 48 hours on weekdays. If you can't review in time, say so in the PR so the captain reroutes it — silence is the only unacceptable answer.
 
-**Comment conventions:** ____________ *(e.g., `nit:` / `q:` / `blocker:`)*
+**Comment conventions:**nit: (take it or leave it) · q: (a real question — answer before merge) · blocker: (must change) · praise: (say what's good; it's how we learn what to repeat). One blocker: per real problem, not a wall of them.*
 
 ## 5 · AI Working Norms
 
@@ -102,29 +94,29 @@ assigned to one person, closed by the merge)*
 The PR author owns every line they open, wherever it came from. AI
 explanations get verified by running the code.
 
-**How we use AI as a team:** ____________
+**How we use AI as a team:** Must specify in comments what was AI generated
 
-**What we never delegate to AI:** ____________
+**What we never delegate to AI:** the schema and migrations (hand-typed, per kickoff), anything touching user scoping, and the review itself — a reviewer reads the diff, not a summary of it.
+
+**What we build by hand first**: each layer's first instance. The first endpoint, the first component, the first test in a file are typed; AI accelerates the second one.
 
 ## 6 · When Things Go Wrong
 
 Stuck protocol (course default): 15 minutes stuck → post in the team
 thread → still stuck at stand-up → TA → office hours.
 
-**If someone can't deliver on time:** ____________ *(tell the team when,
-redistribute how?)*
+**If someone can't deliver on time:** Be transparent and responsible.
 
-**If we have a conflict:** ____________ *(name it at stand-up → TA
-mediates → instructor)*
+**If we have a conflict:** name it at stand-up, out loud, kindly. If it's still there next stand-up, Priya (TA) mediates. If it's about the product direction, it's Ada's call as pitcher and we move on.
 
 ## 7 · Commitment
 
 We wrote this together, we mean it, and we'll revisit it at midterm and
 update what isn't working.
 
-| Signed | Date |
-|--------|------|
-|        |      |
-|        |      |
-|        |      |
-|        |      |
+| Signed            | Date       |
+|-------------------|------------|
+| Arunavo Chowdhury | 09/21/2026 |
+| Brian Zhang       | 09/21/2026 |
+| Hector Garcia     | 09/21/2026 |
+| Zhiling Chen      | 09/21/2026 |
