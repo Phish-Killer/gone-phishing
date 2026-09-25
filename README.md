@@ -8,13 +8,13 @@ opinion on suspicious emails or links safe from threats.
 <!-- TODO: one screenshot or GIF of the thing working.
      A README with a picture gets read; a wall of text gets skimmed. -->
 
-## What it does
+## What it does (TODO)
 
 <!-- TODO: One line per shipped feature, linking its spec — the spec is the full
      story, this list is the menu. Grows as features land. -->
 
-- <Feature — one user-visible sentence> ([spec](docs/specs/<domain>/<feature>.md))
-- <Feature> ([spec](docs/specs/<domain>/<feature>.md))
+- \<Feature — one user-visible sentence\> ([spec](docs/specs/<domain>/<feature>.md))
+- \<Feature\> ([spec](docs/specs/<domain>/<feature>.md))
 
 ## Prerequisites
 
@@ -36,7 +36,7 @@ Check it worked: `http://localhost:3000/api/health` → `{"status":"ok","db":"ok
 All commands: see `package.json` scripts, or `CONTRIBUTING.md` for the
 pre-push set (`pnpm test && pnpm typecheck && pnpm build`).
 
-## How it's built
+## How it's built (TODO)
 
 <!-- TODO: Two or three sentences: the shape of your app in your words —
      what the web app does, what the worker does, what's in the database.
@@ -49,10 +49,10 @@ history in [`docs/postmortems/`](docs/postmortems/), procedures in
 
 ## Team
 
-- <Brian Zhang > — <Brian-Zhg>
-- <Hector Garcia> — <hgarciasoftware>
-- <Arunavo Chowdhury> — <iamarunavo>
-- <Zhiling Chen> — <zhilingchen-elden>
+- \<Brian Zhang\> — \<[@Brian-Zhg](https://github.com/Brian-Zhg)\>
+- \<Hector Garcia\> — \<[@hgarciasoftware](https://github.com/hgarciasoftware)\>
+- \<Arunavo Chowdhury\> — \<[@iamarunavo](https://github.com/iamarunavo)\>
+- \<Zhiling Chen\> — \<[@zhilingchen-elden](https://github.com/zhilingchen-elden)\>
 
 ## Contributing
 
