@@ -15,6 +15,7 @@ CREATE TABLE "URL" (
     "urlId" TEXT NOT NULL,
     "normalizedURL" TEXT NOT NULL,
     "safetyScoreId" TEXT NOT NULL,
+    "domain" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "URL_pkey" PRIMARY KEY ("urlId")
@@ -48,6 +49,9 @@ CREATE TABLE "_BlockedURLs" (
 
 -- CreateIndex
 CREATE UNIQUE INDEX "URL_normalizedURL_key" ON "URL"("normalizedURL");
+
+-- CreateIndex
+CREATE INDEX "URL_domain_idx" ON "URL"("domain");
 
 -- CreateIndex
 CREATE INDEX "_UserURLs_B_index" ON "_UserURLs"("B");
