@@ -19,7 +19,7 @@ export function extractDomain(url: string): string {
 }
 
 //checks DB 
-export async function checkDB(url: string): Promise<boolean>{
+async function checkDB(url: string): Promise<boolean>{
     const domain = extractDomain(url);
 
     const existing = await prisma.uRL.findUnique({
