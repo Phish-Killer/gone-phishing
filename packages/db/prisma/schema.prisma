@@ -25,10 +25,13 @@ model URL {
   urlId         String      @id @default(cuid())
   normalizedURL String      @unique
   safetyScoreId String
+  domain        String
   safetyScore   SafetyScore @relation(fields: [safetyScoreId], references: [id])
   createdAt     DateTime    @default(now())
   users         User[]      @relation("UserURLs")
   blockedBy     User[]      @relation("BlockedURLs")
+
+  @@index([domain])
 }
 
 model SafetyScore {
