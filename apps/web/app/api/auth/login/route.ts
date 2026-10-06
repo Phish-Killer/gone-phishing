@@ -6,6 +6,11 @@
 import { cookies } from "next/headers";
 import { prisma } from "@project/db";
 export const dynamic = "force-dynamic";
+import { z } from "zod";
+
+const SignIn = z.object({
+  username: z.string().trim().min(1),
+});
 
 export async function POST(req: Request) {
   if (process.env.NODE_ENV === "production" && !process.env.ALLOW_DEV_IDENTITY) {
@@ -26,17 +31,20 @@ export async function POST(req: Request) {
     );
   }
 
-  if 
-    (typeof body !== "object" || body === null || !("username" in body) || typeof body.username !== "string" ||body.username.trim() === "") {
-      return Response.json(
-        { error: { code: "VALIDATION", message: "Username is required" } },
-        { status: 400 }
+  const parsed = SignIn.safeParse(body);
+
+  if (!parsed.success) {
+    return Response.json(
+      { error: {code: "INVALID_INPUT",message: "Username is required",},},
+      { status: 400 }
   );
 }
 
-  const username = body.username.trim();
+
+  const username = parsed.data.username;
 
   let user = await prisma.user.findFirst({where: { userName: username },});
+
   if (!user) {
     user = await prisma.user.create({data: { userName: username },});
 }
