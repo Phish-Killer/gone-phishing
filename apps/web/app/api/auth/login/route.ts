@@ -2,15 +2,11 @@
 // and starts the (unsigned — see packages/auth) session. No password: this
 // route does identity, not authentication, and refuses to run in production
 // builds for exactly that reason.
-
+ 
+import { SignIn, findOrCreateUser } from "@project/domain";
 import { cookies } from "next/headers";
-import { prisma } from "@project/db";
-export const dynamic = "force-dynamic";
-import { z } from "zod";
 
-const SignIn = z.object({
-  username: z.string().trim().min(1),
-});
+export const dynamic = "force-dynamic";
 
 export async function POST(req: Request) {
   if (process.env.NODE_ENV === "production" && !process.env.ALLOW_DEV_IDENTITY) {
@@ -40,14 +36,10 @@ export async function POST(req: Request) {
   );
 }
 
-
   const username = parsed.data.username;
 
-  let user = await prisma.user.findFirst({where: { userName: username },});
+  const user = await findOrCreateUser(username);
 
-  if (!user) {
-    user = await prisma.user.create({data: { userName: username },});
-}
   const cookieStore = await cookies();
   cookieStore.set("user-id", user.id);
 
