@@ -5,7 +5,24 @@
 import { prisma } from "@project/db";
 
 async function main() {
-  console.log("seed: no data model yet — nothing to do");
+  const safetyScore = await prisma.safetyScore.upsert({
+    where: { id: 'seed-safety-score' },
+    update: {},
+    create: {
+      id: 'seed-safety-score',
+      label: 'safe',
+      levelOfRisk: 0,
+    },
+  });
+
+  // quick and dirty, don't do it this way maybe
+  const url = await prisma.uRL.upsert({
+    where: { normalizedURL: 'https://example.com' },
+    update: {},
+    create: { normalizedURL: 'https://example.com', safetyScoreId: safetyScore.id }
+  })
+
+  console.log('initialized seed!');
 }
 
 main().catch((err) => {
