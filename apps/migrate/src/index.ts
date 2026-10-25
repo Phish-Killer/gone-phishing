@@ -3,6 +3,7 @@
 
 import { Client } from "pg";
 import { applyMigrations } from "@project/db/migrate";
+import { importPhishingDB } from "@project/db/phishing-db";
 
 const url =
   process.env.DATABASE_URL ?? "postgresql://postgres:postgres@127.0.0.1:5433/postgres";
@@ -21,6 +22,7 @@ async function main() {
     },
     console.log
   );
+  await importPhishingDB();
   await client.end();
   console.log("done");
 }
