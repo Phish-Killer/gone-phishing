@@ -6,8 +6,9 @@
   "main": "./src/index.ts",
   "types": "./src/index.ts",
   "exports": {
-    ".":            { "types": "./src/index.ts", "default": "./src/index.ts" },
-    "./migrate":    { "types": "./src/apply-migrations.ts", "default": "./src/apply-migrations.ts" }
+    ".":                    { "types": "./src/index.ts", "default": "./src/index.ts" },
+    "./migrate":            { "types": "./src/apply-migrations.ts", "default": "./src/apply-migrations.ts" },
+    "./phishing-db": { "types": "./src/import-phishing-db.ts", "default": "./src/import-phishing-db.ts" }
   },
   "scripts": {
     "generate": "prisma generate",
