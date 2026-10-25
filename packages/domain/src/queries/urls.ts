@@ -5,5 +5,5 @@ import { prisma } from "@project/db";
 export async function listURLs() {
   // TODO (maybe): in Prisma schema, change name of URL model to Url
   // line 168 in packages/db/src/generated/prisma/index.d.ts: prisma.uRL looks ugly
-  return prisma.uRL.findMany();
+  return prisma.uRL.findMany({take: 100});
 }
