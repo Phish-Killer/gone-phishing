@@ -13,6 +13,7 @@
     "test:integration": "vitest run",
     "test:watch": "vitest",
     "db:migrate": "pnpm --filter @project/migrate dev",
+    "db:seed": "pnpm --filter @project/migrate seed",
     "db:reset": "rm -rf .pgdata && echo \"Restart pnpm dev (db re-initializes + migrations re-apply)\"",
     "db:dev": "pnpm --filter @project/db-server dev",
     "prisma:generate": "pnpm --filter @project/db generate",
@@ -21,16 +22,18 @@
     "worker": "pnpm --filter @project/worker dev",
     "clean": "turbo run clean && rm -rf node_modules"
   },
-  "dependencies": {},
+  "dependencies": {
+    "tldts": "^7.4.16"
+  },
   "devDependencies": {
-    "turbo": "^2.5.0",
-    "concurrently": "^9.0.0",
-    "typescript": "^5.6.0",
-    "vitest": "^4.0.0",
-    "azurite": "^3.33.0",
-    "tsx": "^4.19.0",
-    "@types/node": "^22.0.0",
     "@project/db": "workspace:*",
-    "@project/domain": "workspace:*"
+    "@project/domain": "workspace:*",
+    "@types/node": "^22.0.0",
+    "azurite": "^3.33.0",
+    "concurrently": "^9.0.0",
+    "tsx": "^4.19.0",
+    "turbo": "^2.5.0",
+    "typescript": "^5.6.0",
+    "vitest": "^4.0.0"
   }
 }
