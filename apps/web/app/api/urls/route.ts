@@ -17,7 +17,7 @@ function extractDomain(url: string): string | null {
   const domain = getDomain(rawDomain);
 
   if (!domain) {
-    throw new Error(`Unable to extract domain from email: ${url}`);
+    throw new Error(`Unable to extract domain from url: ${url}`);
   }
 
   return domain;
@@ -51,7 +51,7 @@ export async function POST(req: Request) {
 
   if (!domain) {
     return Response.json(
-      { error: { code: "DOMAIN_EXTRACTION_FAILED", message: "Could not extract a domain from the provided email." } },
+      { error: { code: "DOMAIN_EXTRACTION_FAILED", message: "Could not extract a domain from the provided url." } },
       { status: 422 }
     );
   }
