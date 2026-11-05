@@ -1,20 +1,30 @@
-import { ParseEmail } from "@project/domain";
+import { ParseEmail, isDomainInDatabase } from "@project/domain";
 import { getDomain } from "tldts";
 
-function extractDomain(email: string): string | null {
+// The email's host first, then each parent up to its registrable domain:
+// "a@mail.evil.com" -> ["mail.evil.com", "evil.com"]. The list holds exact
+// hostnames, so the full host must be checked, but a listed parent also counts.
+function extractHosts(email: string): string[] | null {
   const lastAt = email.lastIndexOf("@");
   if (lastAt === -1) {
     return null;
   }
 
-  const rawDomain = email.slice(lastAt + 1).trim().toLowerCase();
-  const domain = getDomain(rawDomain);
+  const host = email.slice(lastAt + 1).trim().toLowerCase();
+  const registrable = getDomain(host);
 
-  if (!domain) {
+  if (!registrable) {
     throw new Error(`Unable to extract domain from email: ${email}`);
   }
 
-  return domain;
+  const labels = host.split(".");
+  const hosts: string[] = [];
+  for (let i = 0; i < labels.length; i++) {
+    const candidate = labels.slice(i).join(".");
+    hosts.push(candidate);
+    if (candidate === registrable) break;
+  }
+  return hosts;
 }
 
 export async function POST(req: Request) {
@@ -36,21 +46,29 @@ export async function POST(req: Request) {
     );
   }
 
-  let domain: string | null;
+  let hosts: string[] | null;
   try {
-    domain = extractDomain(parsed.data.email);
+    hosts = extractHosts(parsed.data.email);
   } catch {
-    domain = null;
+    hosts = null;
   }
 
-  if (!domain) {
+  if (!hosts) {
     return Response.json(
       { error: { code: "DOMAIN_EXTRACTION_FAILED", message: "Could not extract a domain from the provided email." } },
       { status: 422 }
     );
   }
 
-  return Response.json({ domain, checked: false });
+  try {
+    const inDatabase = await isDomainInDatabase(hosts);
+    return Response.json({ domain: hosts[0], checked: true, inDatabase });
+  } catch {
+    return Response.json(
+      { error: { code: "INTERNAL", message: "Could not check the database." } },
+      { status: 500 }
+    );
+  }
 }
 // Emails endpoint. Theoretically, it retrieves the list of emails that belong
 // to a user, if that user is logged in.
