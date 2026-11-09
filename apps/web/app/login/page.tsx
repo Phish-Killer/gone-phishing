@@ -1,82 +1,53 @@
-
 "use client";
 
-// React hooks for managing form state and Next.js navigation.
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
-  const router = useRouter();
-
-  // Store the username, error message, and loading status.
   const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  // Handle form submission when the user clicks Continue.
+  // Handle username and password login.
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    setError("");
 
-    // Make sure the username is not empty.
-    if (!username.trim()) {
-      setError("Please enter your username.");
+    if (!username.trim() || !password) {
+      setError("Please enter your username and password.");
       return;
     }
 
-    // Clear previous errors and show the loading state.
-    setError("");
-    setLoading(true);
+    // Wait for the secure credentials API integration.
+    setLoading(false);
+    setError("Username and password login is not available yet.");
+  }
 
-    try {
-      // Send the username to the existing login API.
-      const response = await fetch("/api/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ username: username.trim() }),
-      });
-
-      // Show an error if the login request fails.
-      if (!response.ok) {
-        throw new Error("Unable to sign in. Please try again.");
-      }
-
-      // Redirect to the homepage and refresh the user information.
-      router.push("/");
-      router.refresh();
-    } catch {
-      // Display an error message if the request fails.
-      setError("Unable to sign in. Please try again.");
-    } finally {
-      // Stop the loading state whether login succeeds or fails.
-      setLoading(false);
-    }
+  // Google OAuth will be connected to Auth.js.
+  function handleGoogleLogin() {
+    setError("Google sign-in is not available yet.");
   }
 
   return (
-    // Center the login form on the page.
-    <main className="flex min-h-screen items-center justify-center bg-gray-50 px-4">
-      <div className="w-full max-w-sm rounded-2xl bg-white p-8 shadow-md">
-        <h1 className="mb-2 text-center text-3xl font-bold text-gray-900">
-          Gone Phishing
-        </h1>
+    <main className="flex min-h-screen items-center justify-center bg-white px-4">
+      <div className="w-full max-w-sm">
+        <div className="mb-10 text-center">
+          <h1 className="text-4xl font-bold tracking-tight text-black">
+            Gone Phishing
+          </h1>
+          <p className="mt-3 text-sm text-gray-500">
+            Sign in to your account
+          </p>
+        </div>
 
-        <p className="mb-8 text-center text-gray-500">
-          Welcome back
-        </p>
-
-        {/* Login form */}
         <form onSubmit={handleSubmit} className="space-y-5">
           <div>
             <label
               htmlFor="username"
-              className="mb-2 block text-sm font-medium text-gray-700"
+              className="mb-2 block text-sm font-medium text-black"
             >
               Username
             </label>
-
-            {/* Controlled input linked to React state */}
             <input
               id="username"
               type="text"
@@ -84,27 +55,58 @@ export default function LoginPage() {
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               required
-              className="w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-900 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
               placeholder="Enter your username"
+              className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-black outline-none focus:border-black"
             />
           </div>
 
-          {/* Show an error message when login fails */}
+          <div>
+            <label
+              htmlFor="password"
+              className="mb-2 block text-sm font-medium text-black"
+            >
+              Password
+            </label>
+            <input
+              id="password"
+              type="password"
+              autoComplete="current-password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              placeholder="Enter your password"
+              className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-black outline-none focus:border-black"
+            />
+          </div>
+
           {error && (
             <p role="alert" className="text-sm text-red-600">
               {error}
             </p>
           )}
 
-          {/* Disable the button while the request is running */}
           <button
             type="submit"
             disabled={loading}
-            className="w-full rounded-lg bg-blue-600 py-3 font-semibold text-white hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-50"
+            className="w-full rounded-lg bg-black py-3 font-semibold text-white transition hover:bg-gray-800 disabled:opacity-50"
           >
-            {loading ? "Signing in..." : "Continue"}
+            {loading ? "Signing in..." : "Sign In"}
           </button>
         </form>
+
+        <div className="my-7 flex items-center gap-4">
+          <div className="h-px flex-1 bg-gray-200" />
+          <span className="text-sm text-gray-400">or</span>
+          <div className="h-px flex-1 bg-gray-200" />
+        </div>
+
+        <button
+          type="button"
+          onClick={handleGoogleLogin}
+          className="w-full rounded-lg border border-gray-300 bg-white py-3 font-medium text-black transition hover:bg-gray-50"
+        >
+          Continue with Google
+        </button>
       </div>
     </main>
   );
