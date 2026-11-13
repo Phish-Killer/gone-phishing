@@ -64,56 +64,70 @@ export default function UrlChecker() {
   const loading = status.kind === "loading";
 
   return (
-    <section style={styles.wrapper}>
-      <form onSubmit={handleSubmit} style={styles.form} noValidate>
-        <label htmlFor="url-input" style={styles.label}>
-          Check a URL
-        </label>
-        <div style={styles.row}>
-          <input
-            id="url-input"
-            type="search"
-            inputMode="url"
-            autoComplete="off"
-            spellCheck={false}
-            placeholder="https://example.com/page"
-            value={url}
-            onChange={(e) => setUrl(e.target.value)}
-            disabled={loading}
-            style={styles.input}
-          />
-          <button type="submit" disabled={loading} style={styles.button}>
-            {loading ? "Checking…" : "Check URL"}
-          </button>
-        </div>
-      </form>
+    <>
 
-      <div role="status" aria-live="polite" style={styles.output}>
-        {status.kind === "result" && (
-          <p style={{ margin: 0 }}>
-            {status.result.found ? (
-              <>
-                <strong>{status.url}</strong> is in the database.
-              </>
-            ) : (
-              <>
-                <strong>{status.url}</strong> is not in the database.
-              </>
-            )}{" "}
-            <span style={styles.muted}>Domain: {status.result.domain}</span>
-          </p>
-        )}
-        {status.kind === "error" && (
-          <p style={{ margin: 0, color: "#b3261e" }}>{status.message}</p>
-        )}
-      </div>
-    </section>
+      <section style={styles.wrapper}>
+
+        <form onSubmit={handleSubmit} style={styles.form} noValidate>
+          <label htmlFor="url-input" style={styles.label}>
+            Check a URL
+          </label>
+          <div style={styles.row}>
+            <input
+              id="url-input"
+              type="search"
+              inputMode="url"
+              autoComplete="off"
+              spellCheck={false}
+              placeholder="https://example.com/page"
+              value={url}
+              onChange={(e) => setUrl(e.target.value)}
+              disabled={loading}
+              style={styles.input}
+            />
+            <button type="submit" disabled={loading} style={styles.button}>
+              {loading ? "Checking…" : "Check URL"}
+            </button>
+          </div>
+        </form>
+
+        <div role="status" aria-live="polite" style={styles.output}>
+          {status.kind === "result" && (
+            <p style={{ margin: 0 }}>
+              {status.result.found ? (
+                <>
+                  <strong>{status.url}</strong> is in the database.
+                </>
+              ) : (
+                <>
+                  <strong>{status.url}</strong> is not in the database.
+                </>
+              )}{" "}
+              <span style={styles.muted}>Domain: {status.result.domain}</span>
+            </p>
+          )}
+          {status.kind === "error" && (
+            <p style={{ margin: 0, color: "#b3261e" }}>{status.message}</p>
+          )}
+        </div>
+        <div style={styles.historyBox}>
+          <h2 style={styles.history}>History</h2>
+        </div>
+      </section>
+    </>
   );
 }
 
 const styles: Record<string, CSSProperties> = {
-  wrapper: { maxWidth: 560, margin: "2rem auto", padding: "0 1rem" },
-  form: { display: "flex", flexDirection: "column", gap: "0.5rem" },
+  wrapper: { maxWidth: "920px", margin: "2rem auto", padding: "0 1rem" },
+  form: {
+    display: "flex",
+    flexDirection: "column",
+    gap: "0.5rem",
+    border: "2px solid grey",
+    padding: "20px",
+    borderRadius: "20px"
+  },
   label: { fontWeight: 600 },
   row: { display: "flex", gap: "0.5rem" },
   input: {
@@ -132,10 +146,18 @@ const styles: Record<string, CSSProperties> = {
     fontWeight: 600,
     border: "1px solid currentColor",
     borderRadius: 6,
-    background: "transparent",
+    background: "lightBlue",
     color: "inherit",
     cursor: "pointer",
+
   },
   output: { minHeight: "1.5rem", marginTop: "1rem" },
   muted: { opacity: 0.65 },
+  history:{textAlign:"center", fontWeight:"600", paddingTop:"20px",paddingBottom:"10px", backgroundColor:"lightGrey", },
+  historyBox:{
+    height:"20vh",
+    border: "2px solid grey",
+    borderRadius: "20px",
+    overflow: "hidden",
+  }
 };
