@@ -24,6 +24,9 @@ type Status =
 export default function UrlChecker() {
   const [url, setUrl] = useState("");
   const [status, setStatus] = useState<Status>({ kind: "idle" });
+  const [activeTab, setActiveTab] = useState<"url" | "email">("url");
+
+  const [email, setEmail] = useState("");
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -61,35 +64,87 @@ export default function UrlChecker() {
     }
   }
 
+  async function handleEmailSubmit(e: FormEvent<HTMLFormElement>) {
+    
+  }
+
   const loading = status.kind === "loading";
 
   return (
     <>
 
       <section style={styles.wrapper}>
+        <div style={styles.tabs}>
+          <button
+            type="button"
+            onClick={() => setActiveTab("url")}
+            style={activeTab === "url" ? styles.activeTab : styles.tab}
+          >
+            URL Checker
+          </button>
 
-        <form onSubmit={handleSubmit} style={styles.form} noValidate>
-          <label htmlFor="url-input" style={styles.label}>
-            Check a URL
-          </label>
-          <div style={styles.row}>
-            <input
-              id="url-input"
-              type="search"
-              inputMode="url"
-              autoComplete="off"
-              spellCheck={false}
-              placeholder="https://example.com/page"
-              value={url}
-              onChange={(e) => setUrl(e.target.value)}
-              disabled={loading}
-              style={styles.input}
-            />
-            <button type="submit" disabled={loading} style={styles.button}>
-              {loading ? "Checking…" : "Check URL"}
-            </button>
-          </div>
-        </form>
+          <button
+            type="button"
+            onClick={() => setActiveTab("email")}
+            style={activeTab === "email" ? styles.activeTab : styles.tab}
+          >
+            Email Checker
+          </button>
+        </div>
+        {activeTab === "url" && (
+          <form onSubmit={handleSubmit} style={styles.form} noValidate>
+            <label htmlFor="url-input" style={styles.label}>
+              Check a URL
+            </label>
+            <div style={styles.row}>
+              <input
+                id="url-input"
+                type="search"
+                inputMode="url"
+                autoComplete="off"
+                spellCheck={false}
+                placeholder="https://example.com/page"
+                value={url}
+                onChange={(e) => setUrl(e.target.value)}
+                disabled={loading}
+                style={styles.input}
+              />
+              <button type="submit" disabled={loading} style={styles.button}>
+                {loading ? "Checking…" : "Check URL"}
+              </button>
+            </div>
+          </form>
+        )}
+
+          { activeTab === "email" && (
+            <form onSubmit={handleEmailSubmit} style={styles.form} noValidate>
+              <label htmlFor="email-input" style={styles.label}>
+                Check an Email
+              </label>
+
+              <input
+                id="email-input"
+                type="email"
+                placeholder="ExampleEmail@testsite.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                disabled={loading}
+                style={styles.input}
+              />
+
+              <textarea
+                placeholder="Paste the email contents here for AI analysis..."
+                rows={8}
+                style={styles.textarea}
+              />
+
+              <button type="submit" disabled={loading} style={styles.button}>
+                {loading ? "Analyzing…" : "Analyze Email with AI"}
+              </button>
+            </form>
+          )}
+          
+
 
         <div role="status" aria-live="polite" style={styles.output}>
           {status.kind === "result" && (
@@ -153,11 +208,48 @@ const styles: Record<string, CSSProperties> = {
   },
   output: { minHeight: "1.5rem", marginTop: "1rem" },
   muted: { opacity: 0.65 },
-  history:{textAlign:"center", fontWeight:"600", paddingTop:"20px",paddingBottom:"10px", backgroundColor:"lightGrey", },
-  historyBox:{
-    height:"20vh",
+  history: { textAlign: "center", fontWeight: "600", paddingTop: "20px", paddingBottom: "10px", backgroundColor: "lightGrey", },
+  historyBox: {
+    height: "20vh",
     border: "2px solid grey",
     borderRadius: "20px",
     overflow: "hidden",
-  }
+  },
+  tabs: {
+    display: "flex",
+    gap: "0.5rem",
+    marginBottom: "1rem",
+  },
+
+  tab: {
+    flex: 1,
+    padding: "0.75rem",
+    border: "1px solid grey",
+    borderRadius: "10px",
+    background: "transparent",
+    cursor: "pointer",
+  },
+
+  activeTab: {
+    flex: 1,
+    padding: "0.75rem",
+    border: "1px solid grey",
+    borderRadius: "10px",
+    background: "lightBlue",
+    fontWeight: 600,
+    cursor: "pointer",
+  },
+  textarea: {
+  width: "100%",
+  minHeight: "180px",
+  padding: "0.75rem",
+  fontSize: "1rem",
+  border: "1px solid grey",
+  borderRadius: "8px",
+  background: "transparent",
+  color: "inherit",
+  resize: "vertical",
+  fontFamily: "inherit",
+  boxSizing: "border-box",
+},
 };
