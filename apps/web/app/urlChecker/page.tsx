@@ -4,6 +4,7 @@ import { useState, type CSSProperties, type FormEvent } from "react";
 
 // Change this to wherever your route.ts lives.
 const ENDPOINT = "/api/urls";
+const emailENDPOINT = "/api/emails"
 
 type CheckResult = {
   domain: string;
@@ -25,6 +26,7 @@ export default function UrlChecker() {
   const [url, setUrl] = useState("");
   const [status, setStatus] = useState<Status>({ kind: "idle" });
   const [activeTab, setActiveTab] = useState<"url" | "email">("url");
+  const [emailContent, setEmailContent] = useState("");
 
   const [email, setEmail] = useState("");
 
@@ -65,7 +67,39 @@ export default function UrlChecker() {
   }
 
   async function handleEmailSubmit(e: FormEvent<HTMLFormElement>) {
-    
+    e.preventDefault();
+
+    const trimmed = email.trim();
+
+    if (!trimmed) {
+      setStatus({ kind: "error", message: "Enter a Email to check." });
+      return;
+    }
+    setStatus({ kind: "loading" });
+
+    try {
+      const res = await fetch(emailENDPOINT, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: trimmed }),
+      });
+
+      const data: CheckResult | ApiError = await res.json();
+
+      if (!res.ok || "error" in data) {
+        const message =
+          "error" in data ? data.error.message : "Something went wrong.";
+        setStatus({ kind: "error", message });
+        return;
+      }
+
+      setStatus({ kind: "result", url: trimmed, result: data });
+    } catch {
+      setStatus({
+        kind: "error",
+        message: "Couldn't reach the server. Check your connection and try again.",
+      });
+    }
   }
 
   const loading = status.kind === "loading";
@@ -116,12 +150,12 @@ export default function UrlChecker() {
           </form>
         )}
 
-          { activeTab === "email" && (
-            <form onSubmit={handleEmailSubmit} style={styles.form} noValidate>
-              <label htmlFor="email-input" style={styles.label}>
-                Check an Email
-              </label>
-
+        {activeTab === "email" && (
+          <form onSubmit={handleEmailSubmit} style={styles.form} noValidate>
+            <label htmlFor="email-input" style={styles.label}>
+              Check an Email
+            </label>
+            <div style={styles.row}>
               <input
                 id="email-input"
                 type="email"
@@ -131,19 +165,21 @@ export default function UrlChecker() {
                 disabled={loading}
                 style={styles.input}
               />
+            </div>
+            <textarea
+              placeholder="Paste the email contents here for AI analysis..."
+              rows={8}
+              value={emailContent}
+              onChange={(e) => setEmailContent(e.target.value)}
+              style={styles.textarea}
+            />
 
-              <textarea
-                placeholder="Paste the email contents here for AI analysis..."
-                rows={8}
-                style={styles.textarea}
-              />
+            <button type="submit" disabled={loading} style={styles.button}>
+              {loading ? "Analyzing…" : "Analyze Email with AI"}
+            </button>
+          </form>
+        )}
 
-              <button type="submit" disabled={loading} style={styles.button}>
-                {loading ? "Analyzing…" : "Analyze Email with AI"}
-              </button>
-            </form>
-          )}
-          
 
 
         <div role="status" aria-live="polite" style={styles.output}>
@@ -240,16 +276,16 @@ const styles: Record<string, CSSProperties> = {
     cursor: "pointer",
   },
   textarea: {
-  width: "100%",
-  minHeight: "180px",
-  padding: "0.75rem",
-  fontSize: "1rem",
-  border: "1px solid grey",
-  borderRadius: "8px",
-  background: "transparent",
-  color: "inherit",
-  resize: "vertical",
-  fontFamily: "inherit",
-  boxSizing: "border-box",
-},
+    width: "100%",
+    minHeight: "180px",
+    padding: "0.75rem",
+    fontSize: "1rem",
+    border: "1px solid grey",
+    borderRadius: "8px",
+    background: "transparent",
+    color: "inherit",
+    resize: "vertical",
+    fontFamily: "inherit",
+    boxSizing: "border-box",
+  },
 };
