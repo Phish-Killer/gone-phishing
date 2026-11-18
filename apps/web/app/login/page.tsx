@@ -1,7 +1,6 @@
 "use client";
-
 import { useState } from "react";
-
+import Link from "next/link";
 export default function LoginPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -23,7 +22,7 @@ export default function LoginPage() {
     setError("Username and password login is not available yet.");
   }
 
-  // Google OAuth will be connected to Auth.js.
+  // Google Oauth will be connected to Auth.js.
   function handleGoogleLogin() {
     setError("Google sign-in is not available yet.");
   }
@@ -107,6 +106,12 @@ export default function LoginPage() {
         >
           Continue with Google
         </button>
+        <p className="mt-6 text-center text-sm text-gray-600">
+          Don't have an account?{" "}
+          <Link href="/signup" className="font-medium text-black underline">
+            Sign up
+          </Link>
+        </p>
       </div>
     </main>
   );
