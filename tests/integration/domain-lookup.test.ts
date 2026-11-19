@@ -21,7 +21,7 @@ beforeAll(async () => {
     "x.shared.com",
     "ftp://me@ftp-bad.org:21/x",
   ]) {
-    await prisma.uRL.create({ data: { normalizedURL, safetyScoreId: score.id } });
+    await prisma.url.create({ data: { normalizedURL, safetyScoreId: score.id } });
   }
 }, 30000);
 

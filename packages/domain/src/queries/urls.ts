@@ -4,7 +4,7 @@ import { prisma } from "@project/db";
 
 export async function listURLs() {
   // TODO (maybe): in Prisma schema, change name of URL model to Url
-  // line 168 in packages/db/src/generated/prisma/index.d.ts: prisma.uRL looks ugly
+  // line 168 in packages/db/src/generated/prisma/index.d.ts: prisma.url looks ugly
   return prisma.url.findMany();
 }
 
@@ -17,7 +17,7 @@ export async function isDomainInDatabase(hosts: string[]): Promise<boolean> {
   const clean = [...new Set(hosts.map((h) => h.trim().toLowerCase()).filter(Boolean))];
   if (clean.length === 0) return false;
 
-  const exact = await prisma.uRL.findFirst({
+  const exact = await prisma.url.findFirst({
     where: { normalizedURL: { in: clean } },
     select: { urlId: true },
   });
