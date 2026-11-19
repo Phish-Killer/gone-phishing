@@ -15,13 +15,13 @@ datasource db {
 
 model User {
   id             String   @id @default(cuid())
-  userName       String
-  blockList      URL[]    @relation("BlockedURLs")
-  URLs           URL[]    @relation("UserURLs")
+  userName       String   @unique
+  blockList      Url[]    @relation("BlockedURLs")
+  URLs           Url[]    @relation("UserURLs")
   createdAt      DateTime @default(now())
 }
 
-model URL {
+model Url {
   urlId         String      @id @default(cuid())
   normalizedURL String      @unique
   safetyScoreId String
@@ -29,6 +29,8 @@ model URL {
   createdAt     DateTime    @default(now())
   users         User[]      @relation("UserURLs")
   blockedBy     User[]      @relation("BlockedURLs")
+
+  @@map("URL")
 }
 
 model SafetyScore {
@@ -36,5 +38,5 @@ model SafetyScore {
   label        String
   levelOfRisk  Int
   feedback     String[]
-  URLs         URL[]
+  URLs         Url[]
 }
