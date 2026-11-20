@@ -1,3 +1,3 @@
-import { handlers } from "../../../../auth";
+import { handlers } from "@project/auth/src/auth";
 
 export const { GET, POST } = handlers;
