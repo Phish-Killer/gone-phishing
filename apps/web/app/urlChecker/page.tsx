@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type CSSProperties, type FormEvent } from "react";
+import { useState, type CSSProperties, React.FormEvent<HTMLFormElement> } from "react";
 
 // Change this to wherever your route.ts lives.
 const ENDPOINT = "/api/urls";

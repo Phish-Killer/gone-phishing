@@ -56,5 +56,11 @@ export async function POST(req: Request) {
     );
   }
 
-  return Response.json({ domain, checked: false });
+  const urls = await listURLs();
+
+  const found = urls.some(
+    (entry) => extractDomain(entry.domain) === domain
+  );
+
+  return Response.json({ domain, checked: true, found });
 }
