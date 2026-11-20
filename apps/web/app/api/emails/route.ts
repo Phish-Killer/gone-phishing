@@ -61,8 +61,8 @@ export async function POST(req: Request) {
   }
 
   try {
-    const inDatabase = await isDomainInDatabase(hosts);
-    return Response.json({ domain: hosts[0], checked: true, inDatabase });
+    const found = await isDomainInDatabase(hosts);
+    return Response.json({ domain: hosts[0], checked: true, found });
   } catch {
     return Response.json(
       { error: { code: "INTERNAL", message: "Could not check the database." } },

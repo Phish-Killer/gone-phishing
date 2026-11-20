@@ -29,20 +29,20 @@ describe("POST /api/emails", () => {
     isDomainInDatabase.mockResolvedValue(true);
     const res = await post({ email: "scam@evil.com" });
     expect(res.status).toBe(200);
-    expect(await res.json()).toEqual({ domain: "evil.com", checked: true, inDatabase: true });
+    expect(await res.json()).toEqual({ domain: "evil.com", checked: true, found: true });
     expect(isDomainInDatabase).toHaveBeenCalledWith(["evil.com"]);
   });
 
   it("reports an unknown domain", async () => {
     isDomainInDatabase.mockResolvedValue(false);
     const res = await post({ email: "hi@fake.com" });
-    expect(await res.json()).toEqual({ domain: "fake.com", checked: true, inDatabase: false });
+    expect(await res.json()).toEqual({ domain: "fake.com", checked: true, found: false });
   });
 
   it("checks the full host and its parent domains, and reports the host", async () => {
     isDomainInDatabase.mockResolvedValue(true);
     const res = await post({ email: "a@mail.evil.com" });
-    expect(await res.json()).toEqual({ domain: "mail.evil.com", checked: true, inDatabase: true });
+    expect(await res.json()).toEqual({ domain: "mail.evil.com", checked: true, found: true });
     expect(isDomainInDatabase).toHaveBeenCalledWith(["mail.evil.com", "evil.com"]);
   });
 
