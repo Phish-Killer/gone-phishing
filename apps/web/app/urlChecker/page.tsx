@@ -1,10 +1,10 @@
 "use client";
 
-import { useState, type CSSProperties, React.FormEvent<HTMLFormElement> } from "react";
+import { useState, type CSSProperties, type FormEvent } from "react";
 
 // Change this to wherever your route.ts lives.
 const ENDPOINT = "/api/urls";
-const emailENDPOINT = "/api/emails"
+const emailENDPOINT = "/api/emails";
 
 type CheckResult = {
   domain: string;
