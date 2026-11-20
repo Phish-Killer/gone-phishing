@@ -54,7 +54,8 @@ export async function POST(req: Request) {
   const emails = await listURLs();
 
 const found = emails.some(
-  (entry: { domain: string }) => entry.domain === domain
+  (entry: { normalizedURL: string }) =>
+    extractDomain(entry.normalizedURL) === domain
 );
 
 return Response.json({ domain, checked: true, found });
