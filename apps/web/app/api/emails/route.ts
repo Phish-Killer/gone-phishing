@@ -54,7 +54,7 @@ export async function POST(req: Request) {
   const emails = await listURLs();
 
 const found = emails.some(
-  (entry) => entry.domain === domain
+  (entry: { domain: string }) => entry.domain === domain
 );
 
 return Response.json({ domain, checked: true, found });

@@ -16,7 +16,7 @@ async function main() {
   });
 
   // quick and dirty, don't do it this way maybe
-  const url = await prisma.uRL.upsert({
+  const url = await prisma.url.upsert({
     where: { normalizedURL: 'https://example.com' },
     update: {},
     create: { normalizedURL: 'https://example.com', safetyScoreId: safetyScore.id }

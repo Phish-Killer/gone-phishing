@@ -59,7 +59,7 @@ export async function POST(req: Request) {
   const urls = await listURLs();
 
   const found = urls.some(
-    (entry) => extractDomain(entry.domain) === domain
+    (entry: { domain: string }) => entry.domain === domain
   );
 
   return Response.json({ domain, checked: true, found });
