@@ -1,5 +1,6 @@
 import { ParseEmail } from "@project/domain";
 import { getDomain } from "tldts";
+import { listURLs } from "@project/domain";
 
 function extractDomain(email: string): string | null {
   const lastAt = email.lastIndexOf("@");
@@ -50,7 +51,14 @@ export async function POST(req: Request) {
     );
   }
 
-  return Response.json({ domain, checked: false });
+  const emails = await listURLs();
+
+const found = emails.some(
+  (entry: { normalizedURL: string }) =>
+    extractDomain(entry.normalizedURL) === domain
+);
+
+return Response.json({ domain, checked: true, found });
 }
 // Emails endpoint. Theoretically, it retrieves the list of emails that belong
 // to a user, if that user is logged in.

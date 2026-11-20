@@ -11,8 +11,12 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className="mx-auto max-w-2xl px-4 py-10 font-sans text-neutral-900 antialiased">
-        {children}
+      <body className="font-sans text-neutral-900 antialiased">
+        <header className="w-full border-b border-neutral-200 px-8 py-4">
+          <h2 className="m-0 text-xl font-semibold">Gone Phishing</h2>
+          <h3>Real Time Phishing </h3>
+        </header>
+        <main className="mx-auto max-w-2xl px-4 py-10">{children}</main>
       </body>
     </html>
   );
